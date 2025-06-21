@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>💌</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Georgia', serif;
+      background: radial-gradient(circle at center, #fff0f5, #fde2e4);
+      overflow-x: hidden;
+    }
+
+    .fondo-animado {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .rosa, .corazon {
+      position: absolute;
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: flotar linear infinite;
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    .rosa {
+      width: 70px;
+      height: 70px;
+      background-image: url('https://i.pinimgproxy.com/?url=aHR0cHM6Ly9jZG4taWNvbnMtcG5nLmZsYXRpY29uLmNvbS8yNTYvNzU3Ni83NTc2NTcyLnBuZw==&ts=1750469261&sig=ccd5ffe62ac60df5d959907928ec8dd041465ab928f3411495ba44de5fbc2ebe');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+
+    .corazon {
+      width: 40px;
+      height: 40px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+    }
+
+    .boton-carta {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ff4d6d;
+      border: none;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      animation: palpitar 1s infinite;
+      z-index: 10;
+    }
+
+    @keyframes palpitar {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .boton-carta::before {
+      content: "\2764";
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    .mensaje-inicial {
+      position: absolute;
+      top: calc(50% + 70px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.85);
+      padding: 10px 20px;
+      border-radius: 8px;
+      color: #b24060;
+      font-weight: bold;
+      font-size: 1.1em;
+      z-index: 10;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    .carta {
+      display: none;
+      position: relative;
+      padding: 40px;
+      margin: 100px auto;
+      max-width: 800px;
+      background: #fff8f0 url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      border: 2px solid #c89f9c;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.2);
+      overflow-y: auto;
+      max-height: 80vh;
+      z-index: 5;
+      text-align: center;
+    }
+
+    .carta h1 {
+      color: #b24060;
+      margin-bottom: 20px;
+      font-size: 2em;
+    }
+
+    .carta p {
+      font-size: 1.2em;
+      color: #5b2c3d;
+      line-height: 1.8em;
+      margin-bottom: 30px;
+    }
+
+    .firma {
+      font-size: 1.1em;
+      color: #f84049;
+      font-style: italic;
+      margin-top: 40px;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+
+    .carta section {
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+
+    audio { display: none; }
+  </style>
+</head>
+<body>
+
+<div class="fondo-animado" id="fondo"></div>
+
+<button class="boton-carta" onclick="abrirCarta()"></button>
+<div class="mensaje-inicial" id="mensaje"> Toca el corazón </div>
+
+<div class="carta" id="contenido">
+  <section>
+    <h1>Fanny </h1>
+    <p>No te prometo un jardín lleno de rosas,<br>
+    pero sí cuidar de ti como a la flor más hermosa.</p>
+  </section>
+  <section>
+    <p>No te prometo el sol todos los días,<br>
+    pero sí calor cuando el mundo se enfríe.</p>
+  </section>
+  <section>
+    <p>No tengo ramos ni perfumes caros,<br>
+    pero tengo versos que florecen cuando sonríes.</p>
+  </section>
+  <section>
+    <p>Si pudiera darte algo eterno,<br>
+    te daría mis ganas de vivir a tu lado.</p>
+  </section>
+  <section>
+    <p>Porque tú, mi amor, eres eso que Benedetti diría:<br>
+    "Es tan lindo saber que usted existe uno se siente vivo y cuando digo esto quiero decir contar
+      aunque sea hasta dos aunque sea hasta cinco no ya para que acuda presurosa en mi auxilio
+          sino para saber a ciencia cierta que usted sabe que puede contar conmigo." 💖</p>
+  </section>
+  <div class="firma" id="firma">Con amor,<br><strong>A.</strong></div>
+</div>
+
+<audio id="musica" autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg" />
+</audio>
+
+<script>
+  const fondo = document.getElementById("fondo");
+  const contenido = document.getElementById("contenido");
+  const musica = document.getElementById("musica");
+  const mensaje = document.getElementById("mensaje");
+  const firma = document.getElementById("firma");
+
+  for (let i = 0; i < 20; i++) {
+    const rosa = document.createElement('div');
+    rosa.className = 'rosa';
+    rosa.style.left = Math.random() * 100 + 'vw';
+    rosa.style.animationDuration = (8 + Math.random() * 5) + 's';
+    rosa.style.animationDelay = Math.random() * 5 + 's';
+    fondo.appendChild(rosa);
+  }
+
+  for (let i = 0; i < 15; i++) {
+    const corazon = document.createElement('div');
+    corazon.className = 'corazon';
+    corazon.style.left = Math.random() * 100 + 'vw';
+    corazon.style.animationDuration = (6 + Math.random() * 4) + 's';
+    corazon.style.animationDelay = Math.random() * 4 + 's';
+    fondo.appendChild(corazon);
+  }
+
+  function abrirCarta() {
+    document.querySelector('.boton-carta').style.display = 'none';
+    mensaje.style.display = 'none';
+    contenido.style.display = 'block';
+    musica.play().catch(() => {});
+
+    const secciones = contenido.querySelectorAll('section');
+    let i = 0;
+
+    function mostrarSeccion() {
+      if (i < secciones.length) {
+        secciones[i].style.opacity = 1;
+        secciones[i].scrollIntoView({ behavior: 'smooth' });
+        i++;
+        setTimeout(mostrarSeccion, 4000);
+      } else {
+        // Mostrar la firma al final con fade-in
+        firma.style.opacity = 1;
+        firma.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    setTimeout(mostrarSeccion, 1000);
+  }
+</script>
+
+</body>
+</html>
